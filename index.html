@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html ng-app="cartApp">
+<head lang="en">
+  <meta charset="UTF-8">
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.14/angular.js"></script>
+  <script src="app.js"></script>
+  <title>CodeTest001</title>
+</head>
+<body ng-controller="CartController">
+  <input ng-model="scanned" /><br />
+  Cart total: {{total | currency}}
+</body>
+</html>

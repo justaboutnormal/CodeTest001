@@ -22,24 +22,24 @@ function getSubtotal(quantity, rules, subtotal){
     if(rule.at == 1){
         return subtotal + rule.price * quantity;
     }
-    //a rule.at another value should have one of [price, quantityLike]
+    //a rule.at another value should have one of [price, priceOf]
     //TODO: add discount and other types of promotions to a product
-    if(rule.quantityLike != undefined){
+    if(rule.priceOf != undefined){
         var times = Math.floor(quantity / rule.at);//how many times should this rule be used?
         var minus = rule.at * times;//use this to subtract from the quantity only the products of this type that have not been priced yet
-        subtotal += getSubtotal(rule.quantityLike, rules, subtotal) * times;
+        subtotal += getSubtotal(rule.priceOf, rules, subtotal) * times;
         return getSubtotal(quantity - minus, rules, subtotal);//after pricing all products that may use the selected rule getSubtotal for any remaining products
     }
 }
 
-function getTotal(scanned, products){
-    scanned = (scanned || '').toLowerCase().split('');//separate the string into characters
+function getTotal(items, products){
+    items = (items || '').toLowerCase().split('');//separate the string into characters
 
     var total = 0;
 
     //look at each product and get the subTotal for the quantity of that product
     products.map(function(prod){
-        var quantity = scanned.filter(function(val){return val == prod.name}).length;
+        var quantity = items.filter(function(val){return val == prod.name}).length;
         total += getSubtotal(quantity, prod.prices);
     });
 
@@ -47,13 +47,13 @@ function getTotal(scanned, products){
 }
 
 var Supermarket = {
-    //TODO: us an AJAX call to get products and their pricing rules (temporarily define the rules inline)
+    //TODO: use an AJAX call to get products and their pricing rules (temporarily define the rules inline)
     products: [
                 {name: 'a', prices: [{at: 1, price: 20}]},
                 {
                     name: 'b',
                     prices: [
-                        {at: 5, quantityLike: 3},//price 5 items of this type as if they had a quantity like 3
+                        {at: 5, priceOf: 3},//price 5 items for the priceOf 3
                         {at: 1, price: 50}
                     ]
                 },

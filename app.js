@@ -12,7 +12,7 @@ function getSubtotal(quantity, rules, subtotal){
     subtotal = subtotal || 0;
 
     //get the largest [at] that is less than the quantity
-    var rule = rules.filter(function(r){if(r.at <= quantity) return r;}).sort(function(a, b){return a.at > b.at}).slice(-1)[0];
+    var rule = rules.filter(function(r){if(r.at <= quantity) return r;}).sort(function(a, b){return a.at > b.at}).pop();
 
     //if there is no rule the quantity was probably 0, return the subtotal provided
     if(rule == undefined){

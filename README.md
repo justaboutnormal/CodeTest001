@@ -14,5 +14,7 @@ This is a project meant to demonstrate developer skills during an interview.
   Implement the following:
 
   public interface Supermarket {
+
     public int checkout(String items); 
+
   }

@@ -19,7 +19,7 @@ function getSubtotal(quantity, rules, subtotal){
         return subtotal;
     }
     //a rule.at 1 is most common and it must have a price, multiply it by the quantity
-    if(rule.at == 1){
+    if(rule.price != undefined){
         return subtotal + rule.price * quantity;
     }
     //a rule.at another value should have one of [price, priceOf]
@@ -30,6 +30,8 @@ function getSubtotal(quantity, rules, subtotal){
         subtotal += getSubtotal(rule.priceOf, rules, subtotal) * times;
         return getSubtotal(quantity - minus, rules, subtotal);//after pricing all products that may use the selected rule getSubtotal for any remaining products
     }
+
+    throw "A pricing rule must either have [price] or [priceOf] defined.";
 }
 
 function getTotal(items, products){
